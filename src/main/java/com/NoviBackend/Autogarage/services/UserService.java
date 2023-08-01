@@ -1,21 +1,22 @@
 package com.NoviBackend.Autogarage.services;
 
-import com.NoviBackend.Autogarage.models.User;
-import org.springframework.stereotype.Service;
+import com.NoviBackend.Autogarage.dto.UserDTO;
 
 import java.util.List;
 
-@Service
-public class UserService {
+public interface UserService {
+   //Service for creating a user
+   UserDTO createUser(UserDTO userDTO);
 
-    public List<User> getUsers(){
-        return List.of(
-                new User(
-                        1L,
-                        "Dave",
-                        "Dave123.",
-                        "Backoffice"
-                )
-        );
-    }
+   //Service for getting a single user
+   UserDTO getUserById(Long id);
+
+   //Service for getting all users
+   List<UserDTO> getAllUsers();
+
+   //Service to update a user
+   UserDTO updateUser(Long id, UserDTO updatedUser);
+
+   //Service to delete a user
+   void deleteUserById(Long id);
 }

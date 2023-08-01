@@ -1,27 +1,48 @@
 package com.NoviBackend.Autogarage.controllers;
 
-import com.NoviBackend.Autogarage.models.User;
+import com.NoviBackend.Autogarage.dto.UserDTO;
 import com.NoviBackend.Autogarage.services.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@AllArgsConstructor
 @RestController
-@RequestMapping(path = "users")
+@RequestMapping("api/users")
 public class UserController {
 
-    private final UserService userService;
+    private UserService userService;
 
-    @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
+    @PostMapping  //Adds a user to DB
+    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO){
+        UserDTO savedUser = userService.createUser(userDTO);
+        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
 
-    @GetMapping
-    public List<User> getUsers() {
-        return userService.getUsers();
+    @GetMapping("{id}") //Retrieves a single user from DB
+    public ResponseEntity<UserDTO> getUserById(@PathVariable("id") Long id){
+        UserDTO userDTO = userService.getUserById(id);
+        return ResponseEntity.ok(userDTO);
+    }
+
+    @GetMapping  //Retrieves all users from DB
+    public ResponseEntity<List<UserDTO>> getAllUsers(){
+        List<UserDTO> users = userService.getAllUsers();
+        return ResponseEntity.ok(users);
+    }
+
+    @PutMapping("{id}") //Updates existing user-data stored in DB
+    public ResponseEntity<UserDTO> updateUser(@PathVariable("id") Long id, @RequestBody UserDTO updatedUser){
+        UserDTO userDTO = userService.updateUser(id, updatedUser);
+        return ResponseEntity.ok(userDTO);
+    }
+
+    @DeleteMapping("{id}") //Delete a user from the DB
+    public ResponseEntity<String> deleteUser(@PathVariable("id") Long id){
+        userService.deleteUserById(id);
+        return ResponseEntity.ok("User has been deleted");
     }
 }
