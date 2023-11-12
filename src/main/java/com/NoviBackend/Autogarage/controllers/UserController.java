@@ -3,7 +3,6 @@ package com.NoviBackend.Autogarage.controllers;
 import com.NoviBackend.Autogarage.dto.UserDTO;
 import com.NoviBackend.Autogarage.services.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,16 +10,10 @@ import java.util.List;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("api/users")
+@RequestMapping("/api/v1/users")
 public class UserController {
 
     private UserService userService;
-
-    @PostMapping  //Adds a user to DB
-    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO){
-        UserDTO savedUser = userService.createUser(userDTO);
-        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
-    }
 
     @GetMapping("{id}") //Retrieves a single user from DB
     public ResponseEntity<UserDTO> getUserById(@PathVariable("id") Long id){
@@ -43,6 +36,6 @@ public class UserController {
     @DeleteMapping("{id}") //Delete a user from the DB
     public ResponseEntity<String> deleteUser(@PathVariable("id") Long id){
         userService.deleteUserById(id);
-        return ResponseEntity.ok("User has been deleted");
+        return ResponseEntity.ok("UserEntity has been deleted");
     }
 }

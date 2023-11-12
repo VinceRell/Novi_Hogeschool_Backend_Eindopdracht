@@ -1,7 +1,11 @@
 package com.NoviBackend.Autogarage.repositories;
 
-import com.NoviBackend.Autogarage.models.User;
+import com.NoviBackend.Autogarage.models.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaRepository<User, Long> {
+import java.util.Optional;
+
+public interface UserRepository extends JpaRepository<UserEntity, Long> {
+    Optional<UserEntity> findByEmail(String email);
+    Boolean existsByUsername(String email);
 }

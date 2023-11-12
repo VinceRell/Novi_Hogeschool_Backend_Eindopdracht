@@ -1,15 +1,16 @@
 package com.NoviBackend.Autogarage.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDTO {
-    private Long id;
-    private String userName;
-    private String email;
-    private String password;
+     Long id;
+     String firstname;
+     String lastname;
+     String email;
+     String password;
+     String role;
 }

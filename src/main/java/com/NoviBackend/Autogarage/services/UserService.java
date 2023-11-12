@@ -1,12 +1,11 @@
 package com.NoviBackend.Autogarage.services;
 
 import com.NoviBackend.Autogarage.dto.UserDTO;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
 
 public interface UserService {
-   //Service for creating a user
-   UserDTO createUser(UserDTO userDTO);
 
    //Service for getting a single user
    UserDTO getUserById(Long id);
@@ -19,4 +18,7 @@ public interface UserService {
 
    //Service to delete a user
    void deleteUserById(Long id);
+
+   UserDetailsService userDetailsService();
+
 }

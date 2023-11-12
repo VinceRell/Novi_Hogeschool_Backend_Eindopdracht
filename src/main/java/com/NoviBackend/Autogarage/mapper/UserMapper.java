@@ -1,26 +1,35 @@
 package com.NoviBackend.Autogarage.mapper;
 
 import com.NoviBackend.Autogarage.dto.UserDTO;
-import com.NoviBackend.Autogarage.models.User;
+import com.NoviBackend.Autogarage.models.Role;
+import com.NoviBackend.Autogarage.models.UserEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class UserMapper {
 
-    public static UserDTO mapToUserDTO(User user) {
+    private static PasswordEncoder passwordEncoder;
+
+    public static UserDTO mapToUserDTO(UserEntity userEntity) {
         return new UserDTO(
-                user.getId(),
-                user.getUserName(),
-                user.getEmail(),
-                user.getPassword()
-        );
+                userEntity.getId(),
+                userEntity.getFirstname(),
+                userEntity.getLastname(),
+                userEntity.getEmail(),
+                userEntity.getPassword(),
+                userEntity.getRole().name());
     }
 
-    public static User mapToUser(UserDTO userDTO) {
-        return new User(
+    public static UserEntity mapToUser(UserDTO userDTO) {
+        return new UserEntity(
                 userDTO.getId(),
-                userDTO.getUserName(),
+                userDTO.getFirstname(),
+                userDTO.getLastname(),
                 userDTO.getEmail(),
-                userDTO.getPassword()
-        );
+                passwordEncoder.encode(userDTO.getPassword()),
+                Role.valueOf(userDTO.getRole()));
     }
 
 }
+
+
+
